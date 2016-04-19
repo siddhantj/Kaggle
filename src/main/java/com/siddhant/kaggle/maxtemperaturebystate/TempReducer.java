@@ -13,7 +13,7 @@ public class TempReducer extends Reducer<Text, Text, Text, DoubleWritable> {
         String oldYear = null;
         double avgTemp = 0;
         int tempCount = 0;
-        System.out.println("RKey: " + key);
+        //System.out.println("RKey: " + key);
         try {
             for (Text value : values ) {
                 String year = key.toString();

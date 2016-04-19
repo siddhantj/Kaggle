@@ -19,6 +19,8 @@ import java.io.IOException;
  */
 public class MapReduceDriver extends Configured implements Tool {
 
+    public static final String STATE="state";
+
     public static void main(String[] args) throws Exception {
         int exitCode = ToolRunner.run(new MapReduceDriver(), args);
         System.exit(exitCode);
@@ -26,8 +28,8 @@ public class MapReduceDriver extends Configured implements Tool {
 
     @Override
     public int run(String[] args) {
-        if (args.length != 2) {
-            System.err.printf("Usage: %s [generic options] <input> <output>\n",
+        if (args.length != 3) {
+            System.err.printf("Usage: %s [generic options] <input> <output> <state>\n",
                     getClass().getSimpleName());
             ToolRunner.printGenericCommandUsage(System.err);
             return -1;
@@ -35,6 +37,7 @@ public class MapReduceDriver extends Configured implements Tool {
 
         try {
             getConf().set("mapreduce.input.keyvaluelinerecordreader.key.value.separator",",");
+            getConf().set(STATE, args[2]);
             Job job = Job.getInstance(getConf(), "MapReduceDriver");
             job.setJarByClass(MapReduceDriver.class);
             job.setMapperClass(TempMapper.class);
